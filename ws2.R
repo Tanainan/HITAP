@@ -2,6 +2,8 @@ library(rvest)
 library(tidyverse)
 library(stringr)
 library(purrr)
+library(readr)
+
 
 # input url for search results
 # add page numbers of the search results in the url
@@ -31,8 +33,6 @@ for (i in 1:nrow(wbpg)){
     html_text()
   
   # extract abstract
-  # wbpg[i, 3] <- a %>% html_element(xpath = '//*[(@id = "abstract")]//div') %>%
-  #   html_text2()
   wbpg[i, 3] <- a %>% html_element(xpath = '//*[(@id = "abstract")]') %>%
     html_text2()
 }
@@ -41,4 +41,4 @@ colnames(wbpg) <- c("url","title", "abstract")
 
 wbpg$abstract <- str_squish(wbpg$abstract)
 
-write_csv(wbpg, "hitap.csv")
+write_excel_csv(wbpg, "hitap.csv") # save in UTF-8 format
